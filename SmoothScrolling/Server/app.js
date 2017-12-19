@@ -13,7 +13,11 @@ app.get('/users', function(request, response) {
       throw error
     }
     var parsed = JSON.parse(data)
-    var users = _.map(parsed, function(user) { return JSON.parse(user) })
+
+    let id = request.query.id || 0
+    let count = request.query.count || parsed.length
+    let slice = parsed.slice(id, count)
+    var users = _.map(slice, function(user) { return JSON.parse(user) })
     response.json(users)
   })
 })
